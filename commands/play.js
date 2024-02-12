@@ -58,7 +58,7 @@ module.exports = {
                 let url = interaction.options.getString("url");
 
                 const result = await client.player.search(url, {
-                    requestedBy = interaction.user,
+                    requestedBy : interaction.user,
                     searchEngine: QueryType.YOUTUBE_VIDEO,
                 });
 
@@ -81,7 +81,7 @@ module.exports = {
                 let url = interaction.options.getString("url");
 
                 const result = await client.player.search(url, {
-                    requestedBy = interaction.user,
+                    requestedBy : interaction.user,
                     searchEngine: QueryType.YOUTUBE_PLAYLIST,
                 });
 
