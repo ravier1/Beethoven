@@ -19,7 +19,7 @@ module.exports = {
 
         queue.skip();
 
-        await interactionreply({
+        await interaction.reply({
             embeds:
                 new MessageEmbed()
                     .setDescription("Skipped **${currentSong.title}**")
