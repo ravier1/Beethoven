@@ -7,9 +7,8 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_ready():
     print(f"{bot.user.name} is connected to Discord!")
 
+#Mamma Mia! Please work!
 @bot.command(name="ping")
 async def ping(ctx):
     await ctx.send("Pong!")
 
-if __name__ == "__main__":
-    bot.run("YOUR_DISCORD_TOKEN")
