@@ -1,0 +1,37 @@
+# Byte-compiled files
+*.py[cod]
+__pycache__/
+*.so
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Cache files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+
+# Editor and OS-specific files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables and secrets
+config.json
+.env
+
+# Package files
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
