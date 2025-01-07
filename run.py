@@ -1,9 +1,15 @@
 import json
-from beethoven.bot import bot
+import asyncio
+from beethoven.bot import bot, setup
 
 # Load config
 with open("config.json") as f:
     config = json.load(f)
 
-# Run the bot
-bot.run(config["DISCORD_TOKEN"])
+async def main():
+    async with bot:
+        await setup()
+        await bot.start(config["DISCORD_TOKEN"])
+
+if __name__ == "__main__":
+    asyncio.run(main())
