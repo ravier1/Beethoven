@@ -60,20 +60,43 @@ class SlashCommands(commands.Cog):
         vc = interaction.guild.voice_client
         await interaction.response.send_message("Fetching audio...")
 
+        FFMPEG_OPTIONS = {
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+            'options': '-vn'
+        }
+
         with yt_dlp.YoutubeDL(yt_dlp_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             audio_url = info["url"]
 
         vc.stop()
-        vc.play(
-            FFmpegPCMAudio(audio_url, executable=ffmpeg_path),
-            after=lambda e: print(f"Finished playing: {e}"),
-        )
+        audio = FFmpegPCMAudio(audio_url, executable=ffmpeg_path, **FFMPEG_OPTIONS)
+        volume_transformer = PCMVolumeTransformer(audio, volume=self.bot.get_cog("VolumeCommand")._volume)
+        vc.play(volume_transformer)
         await interaction.followup.send(f"Now playing: {info['title']}")
 
     @app_commands.command(name="ping", description="Replies with Pong!")
     async def ping(self, interaction: discord.Interaction):
         await interaction.response.send_message("Pong!")
+
+    @app_commands.command(name="volume", description="Set the volume (0-100)")
+    async def volume(self, interaction: discord.Interaction, volume: int = None):
+        volume_cog = self.bot.get_cog("VolumeCommand")
+        if volume is None:
+            current = int(volume_cog._volume * 100)
+            await interaction.response.send_message(f"Current volume: {current}%")
+            return
+            
+        if not 0 <= volume <= 100:
+            await interaction.response.send_message("Volume must be between 0 and 100")
+            return
+
+        volume_cog._volume = volume / 100.0
+        
+        if interaction.guild.voice_client and interaction.guild.voice_client.source:
+            interaction.guild.voice_client.source.volume = volume_cog._volume
+            
+        await interaction.response.send_message(f"Volume set to {volume}%")
 
 # Add the cog
 async def setup(bot):
