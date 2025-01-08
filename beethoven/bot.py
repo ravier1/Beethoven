@@ -1,38 +1,29 @@
 import discord
 from discord.ext import commands
-import os
 
-# Set up the bot with all intents
-intents = discord.Intents.default()
-intents.message_content = True
-intents.guilds = True
-intents.messages = True
+# Create the bot
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+# I am back! (This is a comment)
 @bot.event
 async def on_ready():
-    print(f"{bot.user} is connected and ready!")
-    try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} command(s)")
-    except Exception as e:
-        print(f"Failed to sync commands: {e}")
+    print(f"{bot.user.name} is connected and ready!")
 
-# Load all commands dynamically from the commands folder
-async def load_commands():
-    for filename in os.listdir("./beethoven/commands"):
-        if filename.endswith(".py") and filename != "__init__.py":
-            try:
-                await bot.load_extension(f"beethoven.commands.{filename[:-3]}")
-                print(f"Loaded extension {filename[:-3]}")
-            except Exception as e:
-                print(f"Failed to load extension {filename[:-3]}: {e}")
+# Prefix command: !ping
+@bot.command(name="ping")
+async def ping_prefix(ctx):
+    await ctx.send("Pong! (Prefix)")
 
-async def setup():
-    await load_commands()
-    await bot.load_extension("beethoven.slash_commands")
+# Slash command: /ping
+@bot.tree.command(name="ping", description="Replies with Pong!")
+async def ping_slash(interaction: discord.Interaction):
+    await interaction.response.send_message("Pong! (Slash)")
 
-# Entry point
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(setup())
+# setup_hook is a special method that is called when the bot is starting up.
+# It is necessary to sync the slash commands with Discord so that they are registered and available for use.
+@bot.event
+async def setup_hook():
+    await bot.tree.sync()
+    print("Slash commands synced!")
+
