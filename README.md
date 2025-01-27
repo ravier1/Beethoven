@@ -2,11 +2,13 @@
 
 ![Beethoven Logo](images/logo.png)
 
+<div align="center">
+
 [![Last Commit](https://img.shields.io/github/last-commit/ravier1/Beethoven)](https://github.com/ravier1/Beethoven/commits/main)
 [![Stars](https://img.shields.io/github/stars/ravier1/Beethoven)](https://github.com/ravier1/Beethoven/stargazers)
 [![Forks](https://img.shields.io/github/forks/ravier1/Beethoven)](https://github.com/ravier1/Beethoven/network/members)
-[![License](https://img.shields.io/github/license/ravier1/Beethoven)](https://github.com/ravier1/Beethoven/blob/main/LICENSE)
 
+</div>
 
 Welcome to **Beethoven**, a feature-rich Discord music bot designed to elevate your server's audio experience. With seamless integration and high-quality playback, Beethoven brings music to your community with ease.
 
