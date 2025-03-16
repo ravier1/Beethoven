@@ -26,8 +26,8 @@ Thumbs.db
 desktop.ini
 
 # Environment variables and secrets
-config.json
 .env
+config.json
 
 # Package files
 *.egg-info/
@@ -35,3 +35,5 @@ config.json
 dist/
 build/
 *.egg
+
+config.json
